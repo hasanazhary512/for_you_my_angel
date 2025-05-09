@@ -1,0 +1,34 @@
+/* Mengatur background menjadi gelap */
+body {
+    background-color: #1a1a1a; /* Warna background gelap */
+    color: #f1f1f1; /* Warna teks terang untuk kontras */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Mengatur container untuk tampilan tengah */
+  .container {
+    background-color: #333; /* Warna kotak yang sedikit lebih terang dari background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Efek bayangan pada kotak */
+    max-width: 80%;
+    text-align: center;
+  }
+  
+  /* Styling untuk stiker */
+  .sticker img {
+    margin-bottom: 10px; /* Jarak antara stiker dan teks */
+  }
+  
+  /* Styling untuk teks */
+  .text-box {
+    font-size: 1.5em;
+    line-height: 1.5;
+    color: #ffcccb; /* Warna teks romantis */
+  }
+  

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesan untuk Kamu</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Gaya untuk kontainer */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #333; /* Latar belakang gelap */
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Gaya untuk kotak teks */
+    .text-box {
+      font-size: 2em; /* Ukuran font dikurangi */
+      font-weight: bold;
+      margin: 20px;
+      padding: 30px;
+      border: 2px solid white;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      width: 80%;
+      min-height: 100px; /* Tinggi minimum, tapi bisa bertambah sesuai konten */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-wrap: wrap; /* Biar teks bisa ke bawah */
+      word-break: break-word; /* Biar teks panjang kebagi */
+    }
+
+    /* Gaya untuk tombol Lanjut */
+    #nextButton {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 2em;
+      background-color: #FF6347;
+      color: white;
+      border: 2px solid #FF6347;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 99, 71, 0.5);
+      z-index: 10;
+    }
+
+    #nextButton:hover {
+      background-color: #FF4500;
+      border-color: #FF4500;
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(255, 69, 0, 0.6);
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.7);
+    }
+
+    #nextButton:active {
+      transform: scale(0.95);
+      box-shadow: 0 5px 15px rgba(255, 69, 0, 0.3);
+    }
+
+    /* Gaya emoji */
+    .emoji {
+      position: absolute;
+      font-size: 2.5em;
+      animation: fall 3s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0);
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
+
+    .emoji:nth-child(1) { left: 5%; animation-duration: 3s; }
+    .emoji:nth-child(2) { left: 15%; animation-duration: 4s; }
+    .emoji:nth-child(3) { left: 25%; animation-duration: 2.5s; }
+    .emoji:nth-child(4) { left: 35%; animation-duration: 3.5s; }
+    .emoji:nth-child(5) { left: 45%; animation-duration: 2.8s; }
+
+    /* Gaya balon */
+    .balloon {
+      position: absolute;
+      font-size: 2.5em;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.9;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+      }
+      50% {
+        transform: translateY(50vh) translateX(30px);
+      }
+      100% {
+        transform: translateY(0) translateX(-30px);
+      }
+    }
+
+    .balloon:nth-child(1) { left: 10%; animation-duration: 5s; }
+    .balloon:nth-child(2) { left: 30%; animation-duration: 6s; }
+    .balloon:nth-child(3) { left: 50%; animation-duration: 4.5s; }
+    .balloon:nth-child(4) { left: 70%; animation-duration: 5.5s; }
+    .balloon:nth-child(5) { left: 90%; animation-duration: 4s; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sticker">
+      <img src="stiker1.gif" alt="Stiker Animasi" width="100">
+    </div>
+    <div class="text-box"></div>
+    <button id="nextButton" style="display: none;" onclick="goToNextPage()">Lanjut</button>
+  </div>
+
+  <!-- Hujan Emoji -->
+  <div class="emoji">😛</div>
+  <div class="emoji">😛</div>
+  <div class="emoji">😛</div>
+  <div class="emoji">😛</div>
+  <div class="emoji">😛</div>
+
+  <!-- Balon melayang -->
+  <div class="balloon">🎈</div>
+  <div class="balloon">🎈</div>
+  <div class="balloon">🎈</div>
+  <div class="balloon">🎈</div>
+  <div class="balloon">🎈</div>
+
+  <script>
+    const textParts = [
+      { text: "Hi, Dedek Manis  ❤️", size: "3em", weight: "bold" },
+      { text: "Cie ada yang tambah tua😭", size: "1em", weight: "normal" }
+    ];
+    let partIndex = 0;
+    let charIndex = 0;
+
+    function typeEffect() {
+      const display = document.querySelector(".text-box");
+
+      if (partIndex < textParts.length) {
+        const part = textParts[partIndex];
+
+        if (charIndex < part.text.length) {
+          display.innerHTML += part.text.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeEffect, 100);
+        } else {
+          partIndex++;
+          charIndex = 0;
+          setTimeout(typeEffect, 500);
+        }
+      } else {
+        document.getElementById("nextButton").style.display = "block";
+      }
+    }
+
+    window.onload = typeEffect;
+
+    function goToNextPage() {
+      window.location.href = "hasan2.html";
+    }
+  </script>
+</body>
+</html>

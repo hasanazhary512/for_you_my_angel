@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pertanyaan untuk Kamu</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Gaya untuk kontainer */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #333;
+      background-image: url('foto.jpg'); /* Tambahkan gambar latar */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .text-box {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 20px;
+      padding: 30px;
+      border: 2px solid white;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      width: 80%;
+      min-height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-wrap: wrap;
+      word-break: break-word;
+    }
+
+    #nextButton {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 2em;
+      background-color: #FF6347;
+      color: white;
+      border: 2px solid #FF6347;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 99, 71, 0.5);
+      z-index: 10;
+    }
+
+    #nextButton:hover {
+      background-color: #FF4500;
+      border-color: #FF4500;
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(255, 69, 0, 0.6);
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.7);
+    }
+
+    #nextButton:active {
+      transform: scale(0.95);
+      box-shadow: 0 5px 15px rgba(255, 69, 0, 0.3);
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      width: 20px;
+      height: 20px;
+      background-color: #00BFFF;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall 5s linear infinite, drift 2s ease-in-out infinite;
+    }
+
+    @keyframes fall {
+      0% { top: -10px; }
+      100% { top: 100vh; }
+    }
+
+    @keyframes drift {
+      0% { left: 50%; }
+      100% { left: 0%; }
+    }
+
+    .snowflake:nth-child(1) { animation-duration: 6s, 3s; animation-delay: 0s, 0s; }
+    .snowflake:nth-child(2) { animation-duration: 7s, 4s; animation-delay: 1s, 1s; }
+    .snowflake:nth-child(3) { animation-duration: 5s, 3.5s; animation-delay: 2s, 2s; }
+    .snowflake:nth-child(4) { animation-duration: 6.5s, 3.5s; animation-delay: 3s, 1s; }
+    .snowflake:nth-child(5) { animation-duration: 8s, 5s; animation-delay: 0s, 0s; }
+    .snowflake:nth-child(6) { animation-duration: 9s, 4s; animation-delay: 4s, 2s; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sticker">
+      <img src="stiker2.gif" alt="Stiker Animasi" width="100">
+    </div>
+    <div class="text-box"></div>
+    <button id="nextButton" style="display: none;" onclick="goToNextPage()">Lanjut</button>
+  </div>
+
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+
+  <script>
+    const textParts = [
+      { text: "Hai Cantik, 🥳🎉Selamat Ulang Tahun🎉🥳", size: "3em", weight: "bold" },
+      { text: "Buah melon buah kedondong Tanpa kamu, hatiku kosong melompong 💔", size: "1.5em", weight: "normal" },
+      { text: "🔊 Nyalakan Volume 🔊", size: "2em", weight: "bold" }
+    ];
+
+    let partIndex = 0;
+    let charIndex = 0;
+
+    function typeEffect() {
+      const display = document.querySelector(".text-box");
+      display.style.fontSize = "1.5em";
+      display.style.fontWeight = "normal";
+
+      if (partIndex < textParts.length) {
+        const part = textParts[partIndex];
+
+        if (charIndex < part.text.length) {
+          display.innerHTML += part.text.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeEffect, 100);
+        } else {
+          charIndex = 0;
+          partIndex++;
+          setTimeout(() => {
+            display.innerHTML += "<br>";
+            typeEffect();
+          }, 500);
+        }
+      } else {
+        document.getElementById("nextButton").style.display = "block";
+      }
+    }
+
+    window.onload = typeEffect;
+
+    function goToNextPage() {
+      window.location.href = "pesan/index2.html";
+    }
+  </script>
+</body>
+</html>

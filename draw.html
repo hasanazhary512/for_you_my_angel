@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roda Undian</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #fce4ec;
+      color: #880e4f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin-bottom: 30px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 5px solid #e91e63;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid #ff4081;
+      z-index: 10;
+    }
+
+    button {
+      padding: 15px 40px;
+      font-size: 1.4em;
+      border: none;
+      border-radius: 50px;
+      background: #ff4081;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 64, 129, 0.6);
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #f50057;
+      transform: scale(1.1);
+    }
+
+    #result {
+      margin-top: 40px;
+      font-size: 1.5em;
+      color: #000000;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Silakan putar hadiah, sayang!🥰</h1>
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <canvas id="wheel" width="300" height="300"></canvas>
+  </div>
+
+  <button id="spinButton" onclick="spin()">Putar Roda</button>
+  <div id="result"></div>
+
+  <script>
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+
+    const prizes = [
+      "Tiket Nonton", "Boneka", "Sepatu", "Gagal", "Uang 100k", "Rahasia 😝"
+    ];
+
+    const colors = ["#FF6347", "#FFD700", "#4CAF50", "#2196F3", "#FF69B4", "#9C27B0"];
+    const radius = canvas.width / 2;
+    const arc = (2 * Math.PI) / prizes.length;
+
+    function drawWheel() {
+      for (let i = 0; i < prizes.length; i++) {
+        const angle = i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = colors[i];
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius, angle, angle + arc);
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(angle + arc / 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 14px sans-serif";
+        ctx.fillText(prizes[i], radius / 2, 0);
+        ctx.restore();
+      }
+    }
+
+    drawWheel();
+
+    let angle = 0;
+    let spinning = false;
+
+    function spin() {
+      if (spinning) return;
+      spinning = true;
+
+      const randomIndex = prizes.length - 1; // indeks hadiah "Rahasia 😝"
+      const fullSpins = 5 * 2 * Math.PI;
+
+      // Sudut target agar hadiah "Rahasia 😝" berhenti di atas
+      const targetAngle = (3 * Math.PI / 2) - (randomIndex * arc) - (arc / 2);
+      const target = fullSpins + targetAngle;
+
+      const duration = 4000;
+      const start = performance.now();
+
+      function animate(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+
+        angle = target * easeOut(progress);
+        drawRotatedWheel(angle);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          spinning = false;
+          document.getElementById("result").textContent = `Kamu dapat: 🎉 ${prizes[randomIndex]}!`;
+          changeToThankYouButton();
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function easeOut(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function drawRotatedWheel(rotation) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(rotation);
+      ctx.translate(-radius, -radius);
+      drawWheel();
+      ctx.restore();
+    }
+
+    function changeToThankYouButton() {
+      const button = document.getElementById("spinButton");
+      button.textContent = "Terima Kasih😘, Klik tombol";
+      button.setAttribute("onclick", "window.location.href='https://wa.me/+6285746010423?text=Makasih+Mas+Hasan+untuk+hadiahnya%2C!+Tentukan+tanggal+ketemu+bersama+Mas+Hasan+untuk+mengambil+hadiah%3F'");
+    }
+  </script>
+</body>
+</html>
